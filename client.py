@@ -10,10 +10,10 @@ from scripts.AzureMNIST import AzureMNIST
 # uri = service.serialize()['scoringUri']
 # print(uri)
 
-uri = "http://52.137.31.36:80/score"
+uri = ""
 
-ds = AzureMNIST('data/MNISTPrepareData/processed')
-img, target = ds.__getitem__(100)
+ds = AzureMNIST('data/MNISTPrepareData/processed', train=False)
+img, target = ds.__getitem__(np.random.randint(0, len(ds)))
 pix = np.array(img).reshape(-1)
 
 input_data = "{\"data\": " + str(list(pix)) + "}"

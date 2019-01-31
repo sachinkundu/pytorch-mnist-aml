@@ -3,9 +3,18 @@ from azureml.core.model import Model
 from azureml.core.webservice import AciWebservice
 from azureml.core.webservice import Webservice
 from azureml.core.image import ContainerImage
+from azureml.core.conda_dependencies import CondaDependencies
 
 ws = Workspace.from_config()
 model = Model(ws, 'pytorch_mnist')
+
+myenv = CondaDependencies()
+myenv.add_conda_package("pytorch")
+myenv.add_conda_package("torchvision")
+
+with open("myenv.yml", "w") as f:
+    f.write(myenv.serialize_to_string())
+
 
 aciconfig = AciWebservice.deploy_configuration(cpu_cores=1,
                                                memory_gb=1,
